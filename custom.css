@@ -1,0 +1,13 @@
+button, .round{
+    width: 200px;
+}
+
+h1{ 
+    text-align: center; 
+    margin-top:10%;
+}
+
+#wrapper{
+    width: 200px;
+    margin:30% auto;
+}
