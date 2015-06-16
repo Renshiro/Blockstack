@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8"/>
+        <script type="text/javascript" src="Libraries\matter-0.8.0.min.js"></script>
+        <script type="text/javascript" src="Libraries\jquery-1.11.3.min.js"></script>
+    </head>
+    <body>
+        <div class="score"></div>
+<h1 class="timeclock"></h1>
+<p class="rectangle"></p>
+        
+       <script>
+           
+
+
+            // Matter.js module aliases
+            var Engine = Matter.Engine,
+            World = Matter.World,
+            Bodies = Matter.Bodies,
+            Body = Matter.Body
+            Constraint = Matter.Constraint,
+            Composites = Matter.Composites,
+            Events = Matter.Events,
+            MouseConstraint = Matter.MouseConstraint;
+
+            // create a Matter.js engine
+            var engine = Engine.create(document.body, {
+              render: {
+                options: {
+                  wireframes: false,
+                }
+              }
+            });
+
+            // add a mouse controlled constraint
+            var mouseConstraint = MouseConstraint.create(engine);
+
+            // create ground
+            var ground = Bodies.rectangle(395, 600, 815, 50, { isStatic: true, render: { visible: false } }),
+            rockOptions = { density: 0.68, restitution: 1.0 },
+            rock = Bodies.rectangle(270, 350, 100, 100, rockOptions),
+            anchor = { x: 270, y: 150 },
+            elastic = Constraint.create({
+              pointA: anchor,
+              bodyB: rock,
+              stiffness: 0.5,
+              render: {
+                lineWidth: 0,
+              }
+            });
+           
+            // add all of the bodies to the world
+            World.add(engine.world, [ground, mouseConstraint, rock, elastic]);           
+
+            // run the engine
+            Engine.run(engine)
+        </script>
+        
+    </body>
+</html>
