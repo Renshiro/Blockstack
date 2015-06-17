@@ -1,13 +1,27 @@
-button, .round{
+@font-face { 
+    font-family: "blockstack"; 
+    src: url("fonts/blockstack.ttf");
+}
+
+button, .round {
     width: 200px;
 }
 
-h1{ 
+h1 { 
     text-align: center; 
     margin-top:10%;
+    font-family: blockstack;
 }
 
-#wrapper{
+#wrapper {
     width: 200px;
     margin:30% auto;
+}
+
+#credits {
+    text-align: center;
+}
+
+#back{
+    margin-top: 80%;
 }
