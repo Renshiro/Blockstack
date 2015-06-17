@@ -10,14 +10,46 @@
         <link rel="stylesheet" href="styles/custom.css">
     </head>
     <body>
-        <h1>BLOCKSTACK</h1>
-        
-        <div id="wrapper">
-            <a class="button round" href="#">Play Game</a><br>
-            <a class="button round" href="how2play.html">How 2 Play</a><br>
-            <a class="button round" href="#">Highscores</a><br>
-            <a class="button round" href="credits.html">Credits</a><br>        
+        <div id="menu">
+            <h1>BLOCKSTACK</h1>
+
+            <div id="wrapper">
+                <a id="Game" class="button round" onclick="loadGame()">Play Game</a><br>
+                <a id="How2Play" class="button round" onclick="loadHow2Play()">How 2 Play</a><br>
+                <a id="Highscores" class="button round" onclick="loadHighscores()">Highscores</a><br>
+                <a id="Credits" class="button round" onclick="loadCredits()">Credits</a><br>        
+            </div>
         </div>
-        
+        <div id="content">
+            <!--contains code from other loaded HTML files-->
+        </div>
     </body>
+    <script>
+        $( document ).ready(function() {
+            function loadGame(){
+                $.ajax({url: "game.html", success:
+                function(result){
+					$("#content").html(result);
+				}});
+			};
+            function loadHow2Play(){
+            $.ajax({url: "how2play.html", success:
+                function(result){
+					$("#content").html(result);
+				}});
+			};
+            function loadHighscores(){
+            $.ajax({url: "highscores.html", success:
+                function(result){
+					$("#content").html(result);
+				}});
+			};
+            function loadCredits(){
+            $.ajax({url: "credits.html", success:
+                function(result){
+					$("#content").html(result);
+				}});
+			};
+        });
+    </script>
 </html>
