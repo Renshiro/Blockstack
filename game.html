@@ -5,11 +5,13 @@
         <script type="text/javascript" src="Libraries\jquery-1.11.3.min.js"></script>
     </head>
     <body>
-        <div class="score"></div>
-<h1 class="timeclock"></h1>
-<p class="rectangle"></p>
         
-       <script>       
+       <script>      
+           // Initialize variables
+           Width = window.innerWidth;
+           Height = window.innerHeight;
+           
+           
             // Matter.js module aliases
             var Engine = Matter.Engine,
             World = Matter.World,
@@ -25,6 +27,8 @@
               render: {
                 options: {
                   wireframes: false,
+                    width: Width,
+                    height: Height
                 }
               }
             });
@@ -35,8 +39,8 @@
             // create ground
             var ground = Bodies.rectangle(395, 600, 815, 50, { isStatic: true, render: { visible: false } }),
             rockOptions = { density: 0.68, restitution: 1.0 },
-            rock = Bodies.rectangle(270, 350, 100, 100, rockOptions),
-            anchor = { x: 270, y: 150 },
+            rock = Bodies.rectangle(Width / 2, Height / 3, Width /5, Width / 5, rockOptions),
+            anchor = { x: Width / 2, y: 0 },
             elastic = Constraint.create({
               pointA: anchor,
               bodyB: rock,
