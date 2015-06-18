@@ -1,5 +1,5 @@
 
-<script type="text/javascript" src="../Libraries/matter-0.8.0.min.js"></script>  
+<script type="text/javascript" src="../Libraries/matter.js"></script>  
 <script>      
    // Initialize variables
    Width = window.innerWidth;
@@ -44,12 +44,10 @@
       }
     });
 
-    
-   var force = 2;
-    
    Events.on(engine, 'tick', function(event) {
-       force = -force;
-       Body.translate(elastic.bodyB, {x: force, y: 0});
+      /*for (t = 0; t < 2 * Math.PI; t += 0.01) {
+           Body.translate(elastic.bodyB, { x: x = 10 * Math.cos(t) + elastic.pointA.x, y: y = 10 * Math.sin(t) + elastic.pointA.y});
+        }*/
     });        
 
    Events.on(engine, 'mousedown', function(event) {               
