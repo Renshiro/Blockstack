@@ -1,6 +1,6 @@
 <div class="row" style="height:20%">
 	<div class="small-12 columns text-center"> 
-		<h1>Created By:</h1> 
+		<h1>Created By</h1> 
 	</div>
 </div>
 

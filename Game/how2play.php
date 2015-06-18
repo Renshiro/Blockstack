@@ -1,6 +1,6 @@
 <div class="row" style="height:20%">
 	<div class="small-12 columns text-center"> 
-		<h1>How To PLay</h1> 
+		<h1>How To Play</h1> 
 	</div>
 </div>
 
