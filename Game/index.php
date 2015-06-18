@@ -3,14 +3,14 @@
     <?php
         include 'header.php';
     ?>
-    <body>      
+    <body style="overflow:hidden">      
         <div id="menu" style="height:100%;">
             <div class="row" style="height:20%">
 				<div class="small-12 columns text-center"> 
 					<h1>Blockstack</h1> 
 				</div>
 			</div>
-			
+
 			<div class="row"  style="height:60%">
 				<div class="small-12 columns text-center"> <span id="Game" class="button round" onclick="loadPage('game.php', false)">Play Game</span> </div>
 				<div class="small-12 columns text-center"> <span id="How2Play" class="button round" onclick="loadPage('how2play.php', true)">How To Play</span> </div>

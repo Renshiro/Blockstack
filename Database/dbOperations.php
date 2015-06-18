@@ -1,6 +1,8 @@
 <?php
 	include "dbAccess.php";
 
+    
+
 	function getTopTenTable(){
 		// Abfrage an Datenbank
 		$result = mysql_query("SELECT * FROM `highscore` Order by score Desc Limit 10;");	
