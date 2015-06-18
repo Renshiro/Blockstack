@@ -39,7 +39,7 @@
 				}});
 			};
             function loadHighscores(){
-            $.ajax({url: "highscores.php", dataType:"html", success:
+            $.ajax({url: "highscore.php", dataType:"html", success:
                 function(result){
                     $("#menu").hide();
 					$("#content").html(result);
