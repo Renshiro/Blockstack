@@ -5,7 +5,7 @@
         </div>
     </div>
 
-        <div class="row text-center" style="min-height:60%;margin-bottom:5%">
+    <div class="row text-center" style="min-height:60%;margin-bottom:5%">
         <div class="small-12 columns">
             <table style="margin:0 auto">
               <thead>

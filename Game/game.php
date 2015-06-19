@@ -11,11 +11,16 @@
 </div>
 
 <div id="winMenu" class="reveal-modal" data-reveal aria-labelledby="WinMenu" aria-hidden="true" role="dialog">    
-    <div class="small-12 columns text-center"  style="margin-bottom:100px"> <h1 id="scoreTitle2">score: 0</h1> </div>
-        
-        
-    
-    <div class="small-12 columns text-center">  <a href="#" class="button round" onclick="restart()">Restart</a> </div>
+    <div id="winContext">
+        <form action="index.php" method="POST">
+        <div class="small-12 columns text-center"  style="margin-bottom:100px"> <h1 id="scoreTitle2">score: 0</h1> </div>
+            <input type="hidden" name="scoreTitle3" id="scoreTitle3" value="" />
+        <label>Enter Name
+            <input type="text" name="name" placeholder="Enter Name" />
+                </label>
+            <input type="submit" class="button round" name="submit" id="submit" value="submit"/>
+        </form>        
+    </div>
 </div>
 
 <script type="text/javascript" src="../Libraries/matter.js"></script>
@@ -109,6 +114,7 @@
             $("#score").text("score: " + score);            
             $("#scoreTitle").text("score: " + score);
             $("#scoreTitle2").text("score: " + score);
+            $("#scoreTitle3").val(score);
             
             if(score % changePace == 0) {
                 
@@ -120,7 +126,7 @@
                 
                 changePace *= 2;
                 scorePoints += 10;
-                if(score % (changePace * 10)) {
+                if(score % (changePace * 2)) {
                     BlockSize * 0.95;
                 }
             }
@@ -167,10 +173,6 @@
     function win() { 
         engine.enabled = false;
         $('#winMenu').foundation('reveal', 'open');
-         $.ajax({url: "../Database/dbOperations.php", data: {par: "writeData", score: score}, type: "POST", success:
-                function(result){
-                    $("#tableBody").html(result);
-                    }});
     }    
         
     function gameContinue() {

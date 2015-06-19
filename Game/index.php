@@ -2,6 +2,11 @@
 <html>
     <?php
         include 'header.php';
+        include '../Database/dbAccess.php';
+
+        if(isset($_POST['submit'])){
+             mysql_query( "INSERT INTO highscore (name, score) VALUES ('".$_POST['name']."', ".$_POST['scoreTitle3'].")"); 
+        }
     ?>
     <body style="overflow:hidden">      
         <div id="menu" style="height:100%;">
