@@ -1,7 +1,7 @@
-<a href="#" class="pauseButton" onclick="pause()"> || </a>
-<p onclick="win()" class="score" id="score" name="score">score: 0</p>
+<a class="pauseButton" onclick="pause()"> || </a>
+<p class="score" id="score" name="score">score: 0</p>
 
-<div id="myModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">    
+<div id="pauseMenu" class="reveal-modal" aria-hidden="true" role="dialog">    
     <div class="row" >
         <div class="small-12 columns text-center" style="margin-bottom:100px"> <h1>score: 0</h1> </div>
         <div class="small-12 columns text-center"> <a href="#" class="button round" onclick="gameContinue()">Continue</a></div>
@@ -10,9 +10,28 @@
     </div>    
 </div>
 
-<div>
-
+<div id="winMenu" class="reveal-modal" aria-hidden="true" role="dialog">    
+    <div class="row text-center" style="height:60%;margin-bottom:5%">
+        <div class="small-12 columns">
+            <table style="margin:0 auto">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Name</th>
+                  <th>Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                    include "../Database/dbOperations.php";				
+                    getTopTenTable();
+                ?>			
+              </tbody>
+            </table>
+        </div>
+    </div>  
 </div>
+
 <script type="text/javascript" src="../Libraries/matter.js"></script>
         
 <script>      
@@ -31,7 +50,7 @@
     times = 0;
     count = 0;
     
-    changePace = 50;
+    changePace = 25;
     scorePoints = 10;
     fallingBlock = null;
 
@@ -83,7 +102,7 @@
        
        // check if Lost
        if(fallingBlock.position.y >= Height) {
-           pause();
+           win();
        }
     });        
 
@@ -152,26 +171,19 @@
            return Bodies.rectangle(Width / 2, Height / 3, BlockSize, BlockSize, { restitution: 0, friction: 0.0001, mass: 0.0000001});
     }
     
-    function pause() {
-        $('#myModal').foundation('reveal', 'open');        
-        Engine.enabled = false;
+    function pause() {     
+        engine.enabled = false;
+        $('#pauseMenu').foundation('reveal', 'open');   
     }
     
-    function win() {
-                $.ajax({ url: '../Database/dbOperations.php',
-                 data: {action: score},
-                 type: 'post',
-                 success: function() {
-                              ;
-                          }
-        });
-        
-        // TODO add modal with win   
+    function win() { 
+        engine.enabled = false;
+        $('#winMenu').foundation('reveal', 'open');  
     }    
         
     function gameContinue() {
-        $('#myModal').foundation('reveal', 'close');
-        Engine.enabled = true;
+        $('#pauseMenu').foundation('reveal', 'close');
+        engine.enabled = true;
     }
     
     function restart() {
