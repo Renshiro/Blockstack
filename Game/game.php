@@ -41,7 +41,10 @@
     times = 0;
     count = 0;
     
-    changePace = 20;
+    changePace = 1;
+    actualPace = 0;
+    blockPace = 2;
+    actualBlockPace = 0;
     scorePoints = 10;
     fallingBlock = null;
 
@@ -116,18 +119,22 @@
             $("#scoreTitle2").text("score: " + score);
             $("#scoreTitle3").val(score);
             
-            if(score % changePace == 0) {
-                
+            actualPace++;
+            
+            if(actualPace >= changePace) {
+                actualPace = 0;
+                actualBlockPace++;
                 if(force < 0) {
                     force -= 0.005;   
                 } else {
                     force += 0.005;                    
                 }
                 
-                changePace *= 2;
+                changePace *= 1.1;
                 scorePoints += 10;
-                if(score % (changePace * 2)) {
-                    BlockSize * 0.95;
+                if(actualBlockPace == blockPace) {
+                    BlockSize * 0.85;
+                    actualBlockPace = 0;
                 }
             }
             
