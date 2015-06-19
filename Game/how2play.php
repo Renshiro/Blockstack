@@ -6,10 +6,8 @@
 
 <div class="row"  style="height:60%">
 	<div class="small-12 columns text-center"> 
-		Du beginnst im Spiel damit, einen an einem Kran.
-		schwingenden block zu platzieren und darauf auf zu bauen.
-		Je mehr Blöcke du stapelst, desto mehr Punkte erhälst
-		man.
+		Tap to let the blocks fall.
+        Build a tower and get points.
 	</div>
 </div>
 

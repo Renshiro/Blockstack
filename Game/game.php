@@ -23,7 +23,7 @@
     </div>
 </div>
 
-<script type="text/javascript" src="../Libraries/matter.js"></script>
+<script type="text/javascript" src="matter.js"></script>
         
 <script>      
    // Initialize variables
@@ -183,7 +183,7 @@
     
     function restart() {        
        $(document.body).html('<div id="content"></div>');
-       $.ajax({url: "game.php", dataType:"html", success:
+       $.ajax({url: "Game/game.php", dataType:"html", success:
         function(result){
             $("#menu").hide();
             $("#content").html(result);

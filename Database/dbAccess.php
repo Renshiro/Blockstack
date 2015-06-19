@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "user2733352";
 $password = "tao4mrFr";
-$db = "db2733352-main";
+$db = "db2733352-blockstackdb";
 
 // Verbindung herstellen
 mysql_connect($servername, $username, $password);
