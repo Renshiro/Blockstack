@@ -173,7 +173,8 @@
     function win() { 
         engine.enabled = false;
         $('#winMenu').foundation('reveal', 'open');
-    }    
+    }
+
         
     function gameContinue() {
         $('#pauseMenu').foundation('reveal', 'close');
