@@ -11,6 +11,21 @@
    // Initialize variables
    Width = window.innerWidth;
    Height = window.innerHeight;
+   BlockSize = Height * 0.15;    
+        
+    var angle = Math.PI / 2;
+    var maxAngle = Math.PI - Math.PI /5;
+    var minAngle = Math.PI /5;
+    var force = 0.01;
+    
+    score = 0;
+    clicking = false;
+    times = 0;
+    count = 0;
+    
+    changePace = 20;
+    scorePoints = 10;
+    fallingBlock = null;
 
 
     // Matter.js module aliases
@@ -38,8 +53,10 @@
     var mouseConstraint = MouseConstraint.create(engine);
 
     // create ground
-    var ground = Bodies.rectangle(Width / 2,Height,Width, Height / 10, { isStatic: true, render: { visible: true } }),
+    ground = Bodies.rectangle(Width / 2,Height,Width, Height / 10, { isStatic: true, render: { visible: true } }),
     rock = createRock(),
+    fallingBlock = rock,
+    blockList = [],
     anchor = { x: Width / 2, y: 0 },
     elastic = Constraint.create({
       pointA: anchor,
@@ -50,11 +67,6 @@
       }
     });
     
-    var angle = Math.PI / 2;
-    var maxAngle = Math.PI - Math.PI /5;
-    var minAngle = Math.PI /5;
-    var force = 0.01;
-    
    Events.on(engine, 'tick', function(event) {
        angle += force; 
        
@@ -62,27 +74,61 @@
            force = -force;
        }       
        Body.setPosition(elastic.bodyB, { x: x = (Height/3 * Math.cos(angle)) + elastic.pointA.x, y: y = (Height/3 * Math.sin(angle)) + elastic.pointA.y});
+       
+       
+       // check if Lost
+       if(fallingBlock.position.y >= Height) {
+           pause();
+       }
     });        
+
     
-    score = 0;
-    clicking = false;
     
     $( document.body).click(function() {
         if(!clicking) {
             clicking = true;
-            lastBlock = elastic.bodyB;
+            fallingBlock = elastic.bodyB;
             block = createRock();
             elastic.bodyB = block;
 
-            Body.setVelocity(lastBlock, {x: 0, y: 0}); 
-
-            score++;
+            Body.setVelocity(fallingBlock, {x: 0, y: 1}); 
+            blockList[blockList.length] = fallingBlock;
+            score += scorePoints;
             $("#score").text("score: " + score);
 
-            setTimeout(function(){
-                 World.add(engine.world, [block]); 
+            if(score % changePace == 0) {
+                
+                if(force < 0) {
+                    force -= 0.005;   
+                } else {
+                    force += 0.005;                    
+                }
+                
+                changePace *= 2;
+                scorePoints *= 2;
+                blockSize /= 2;
+            }
+            
+            setTimeout(function(){ 
+                if(times == 0) {
+                    times++;
+                    count++;
+                } else if(times < 3) {
+                    Body.setPosition(ground, {x: ground.position.x, y: ground.position.y + BlockSize});
+                    times++;
+                    count++;
+                } else {
+                       Body.setPosition(ground, {x: ground.position.x, y: ground.position.y + BlockSize});                    
+                        for(i = 0; i < blockList.length - 3;i++) {                                
+                            cBlock = blockList[i];                    
+                            Body.setPosition(cBlock, {x: cBlock.position.x, y: cBlock.position.y + BlockSize});
+                            Matter.Sleeping.set(cBlock,  true);
+                        }
+                       count++;
+                }
+                World.add(engine.world, [block]);
                 clicking = false;
-            }, 1500);
+            }, 1000);
         }        
     });
     
@@ -94,7 +140,7 @@
     
     // Functions ---------------------
     function createRock() {
-           return Bodies.rectangle(Width / 2, Height / 3, Width /5, Width / 5, { restitution: 0, friction: 1, mass: 0.0001});
+           return Bodies.rectangle(Width / 2, Height / 3, BlockSize, BlockSize, { restitution: 0, friction: 0.0001, mass: 0.0000001});
     }
     
     function pause() {    
