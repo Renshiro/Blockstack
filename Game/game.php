@@ -1,16 +1,17 @@
 <a class="pauseButton" onclick="pause()"> || </a>
 <p class="score" id="score" name="score">score: 0</p>
 
-<div id="pauseMenu" class="reveal-modal" aria-hidden="true" role="dialog">    
+<div id="pauseMenu" class="reveal-modal" data-reveal aria-labelledby="PauseMenu" aria-hidden="true" role="dialog">    
     <div class="row" >
-        <div class="small-12 columns text-center" style="margin-bottom:100px"> <h1>score: 0</h1> </div>
+        <div class="small-12 columns text-center"  style="margin-bottom:100px"> <h1 id="scoreTitle">score: 0</h1> </div>
         <div class="small-12 columns text-center"> <a href="#" class="button round" onclick="gameContinue()">Continue</a></div>
         <div class="small-12 columns text-center">  <a href="#" class="button round" onclick="restart()">Restart</a> </div>
         <div class="small-12 columns text-center"> <a href="index.php" class="button round">Exit</a> </div>
     </div>    
 </div>
 
-<div id="winMenu" class="reveal-modal" aria-hidden="true" role="dialog">    
+<div id="winMenu" class="reveal-modal" data-reveal aria-labelledby="WinMenu" aria-hidden="true" role="dialog">    
+    <div class="small-12 columns text-center"  style="margin-bottom:100px"> <h1 id="scoreTitle2">score: 0</h1> </div>
     <div class="row text-center" style="height:60%;margin-bottom:5%">
         <div class="small-12 columns">
             <table style="margin:0 auto">
@@ -21,15 +22,12 @@
                   <th>Score</th>
                 </tr>
               </thead>
-              <tbody>
-                <?php
-                    include "../Database/dbOperations.php";				
-                    getTopTenTable();
-                ?>			
+              <tbody>		
               </tbody>
             </table>
         </div>
     </div>  
+    <div class="small-12 columns text-center">  <a href="#" class="button round" onclick="restart()">Restart</a> </div>
 </div>
 
 <script type="text/javascript" src="../Libraries/matter.js"></script>
@@ -50,7 +48,7 @@
     times = 0;
     count = 0;
     
-    changePace = 25;
+    changePace = 20;
     scorePoints = 10;
     fallingBlock = null;
 
@@ -106,7 +104,7 @@
        }
     });        
 
-    $( document.body ).click(function() {
+    $("canvas").click(function() {
         if(!engine.enabled) {
             return;   
         }
@@ -120,8 +118,10 @@
             Body.setVelocity(fallingBlock, {x: 0, y: 1}); 
             blockList[blockList.length] = fallingBlock;
             score += scorePoints;
-            $("#score").text("score: " + score);
-
+            $("#score").text("score: " + score);            
+            $("#scoreTitle").text("score: " + score);
+            $("#scoreTitle2").text("score: " + score);
+            
             if(score % changePace == 0) {
                 
                 if(force < 0) {
@@ -186,8 +186,13 @@
         engine.enabled = true;
     }
     
-    function restart() {
-        location.reload();
+    function restart() {        
+       $(document.body).html('<div id="content"></div>');
+       $.ajax({url: "game.php", dataType:"html", success:
+        function(result){
+            $("#menu").hide();
+            $("#content").html(result);
+        }});
     }
     
 </script>

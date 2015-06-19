@@ -14,11 +14,13 @@
 			  <th>Score</th>
 			</tr>
 		  </thead>
-		  <tbody>
-			<?php
-				include "../Database/dbOperations.php";				
-				getTopTenTable();
-			?>			
+		  <tbody id="tableBody">
+              <script>
+                $.ajax({url: "../Database/dbOperations.php", data: {par: "topTen"}, type: "POST", success:
+                function(result){
+                    $("#tableBody").html(result);
+                    }});
+              </script>
 		  </tbody>
 		</table>
 	</div>
