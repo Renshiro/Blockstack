@@ -1,7 +1,5 @@
 <?php
-	include "dbAccess.php";
-
-    
+	include "dbAccess.php";    
 
 	function getTopTenTable(){
 		// Abfrage an Datenbank

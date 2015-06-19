@@ -1,10 +1,18 @@
-<a class="pauseButton" href="#" data-reveal-id="myModal" onclick="pause()"> || </a>
+<a href="#" class="pauseButton" onclick="pause()"> || </a>
 <p onclick="win()" class="score" id="score" name="score">score: 0</p>
 
-<div id="myModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="false" role="dialog">
-  <!-- add Menu-->
+<div id="myModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">    
+    <div class="row" >
+        <div class="small-12 columns text-center" style="margin-bottom:100px"> <h1>score: 0</h1> </div>
+        <div class="small-12 columns text-center"> <a href="#" class="button round" onclick="gameContinue()">Continue</a></div>
+        <div class="small-12 columns text-center">  <a href="#" class="button round" onclick="restart()">Restart</a> </div>
+        <div class="small-12 columns text-center"> <a href="index.php" class="button round">Exit</a> </div>
+    </div>    
 </div>
 
+<div>
+
+</div>
 <script type="text/javascript" src="../Libraries/matter.js"></script>
         
 <script>      
@@ -23,13 +31,13 @@
     times = 0;
     count = 0;
     
-    changePace = 20;
+    changePace = 50;
     scorePoints = 10;
     fallingBlock = null;
 
 
     // Matter.js module aliases
-    var Engine = Matter.Engine,
+    Engine = Matter.Engine,
     World = Matter.World,
     Bodies = Matter.Bodies,
     Body = Matter.Body
@@ -48,9 +56,6 @@
         }
       }
     });
-
-    // add a mouse controlled constraint
-    var mouseConstraint = MouseConstraint.create(engine);
 
     // create ground
     ground = Bodies.rectangle(Width / 2,Height,Width, Height / 10, { isStatic: true, render: { visible: true } }),
@@ -82,9 +87,11 @@
        }
     });        
 
-    
-    
-    $( document.body).click(function() {
+    $( document.body ).click(function() {
+        if(!engine.enabled) {
+            return;   
+        }
+        
         if(!clicking) {
             clicking = true;
             fallingBlock = elastic.bodyB;
@@ -105,8 +112,10 @@
                 }
                 
                 changePace *= 2;
-                scorePoints *= 2;
-                blockSize /= 2;
+                scorePoints += 10;
+                if(score % (changePace * 10)) {
+                    BlockSize * 0.95;
+                }
             }
             
             setTimeout(function(){ 
@@ -118,7 +127,7 @@
                     times++;
                     count++;
                 } else {
-                       Body.setPosition(ground, {x: ground.position.x, y: ground.position.y + BlockSize});                    
+                        Body.setPosition(ground, {x: ground.position.x, y: ground.position.y + BlockSize});                    
                         for(i = 0; i < blockList.length - 3;i++) {                                
                             cBlock = blockList[i];                    
                             Body.setPosition(cBlock, {x: cBlock.position.x, y: cBlock.position.y + BlockSize});
@@ -133,7 +142,7 @@
     });
     
     // add all of the bodies to the world
-    World.add(engine.world, [ground, mouseConstraint, rock,  elastic]);           
+    World.add(engine.world, [ground, rock,  elastic]);           
 
     // run the engine
     Engine.run(engine)
@@ -143,13 +152,9 @@
            return Bodies.rectangle(Width / 2, Height / 3, BlockSize, BlockSize, { restitution: 0, friction: 0.0001, mass: 0.0000001});
     }
     
-    function pause() {    
-        if(engine.enabled == false){
-            engine.enabled = true;
-        } else {
-            engine.enabled = false;   
-        }
-        // TODO -  add pause menu as modal
+    function pause() {
+        $('#myModal').foundation('reveal', 'open');        
+        Engine.enabled = false;
     }
     
     function win() {
@@ -162,6 +167,15 @@
         });
         
         // TODO add modal with win   
+    }    
+        
+    function gameContinue() {
+        $('#myModal').foundation('reveal', 'close');
+        Engine.enabled = true;
+    }
+    
+    function restart() {
+        location.reload();
     }
     
 </script>
