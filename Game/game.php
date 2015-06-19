@@ -171,7 +171,7 @@
                 function(result){
                     $("#tableBody").html(result);
                     }});
-    }    
+    }
         
     function gameContinue() {
         $('#pauseMenu').foundation('reveal', 'close');
