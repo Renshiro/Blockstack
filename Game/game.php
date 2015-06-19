@@ -12,21 +12,9 @@
 
 <div id="winMenu" class="reveal-modal" data-reveal aria-labelledby="WinMenu" aria-hidden="true" role="dialog">    
     <div class="small-12 columns text-center"  style="margin-bottom:100px"> <h1 id="scoreTitle2">score: 0</h1> </div>
-    <div class="row text-center" style="height:60%;margin-bottom:5%">
-        <div class="small-12 columns">
-            <table style="margin:0 auto">
-              <thead>
-                <tr>
-                  <th>Rank</th>
-                  <th>Name</th>
-                  <th>Score</th>
-                </tr>
-              </thead>
-              <tbody>		
-              </tbody>
-            </table>
-        </div>
-    </div>  
+        
+        
+    
     <div class="small-12 columns text-center">  <a href="#" class="button round" onclick="restart()">Restart</a> </div>
 </div>
 
@@ -178,7 +166,11 @@
     
     function win() { 
         engine.enabled = false;
-        $('#winMenu').foundation('reveal', 'open');  
+        $('#winMenu').foundation('reveal', 'open');
+         $.ajax({url: "../Database/dbOperations.php", data: {par: "writeData", score: score}, type: "POST", success:
+                function(result){
+                    $("#tableBody").html(result);
+                    }});
     }    
         
     function gameContinue() {
