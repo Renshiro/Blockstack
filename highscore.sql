@@ -3,8 +3,10 @@
 --
 
 CREATE TABLE IF NOT EXISTS `highscore` (
-  `name` varchar(20) NOT NULL,
-  `score` int(11) NOT NULL
+  `scoreId` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(40),
+  `score` int(11) NOT NULL,
+    PRIMARY KEY (scoreId)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

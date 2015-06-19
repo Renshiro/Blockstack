@@ -2,4 +2,6 @@ www.freehoster.ch
 email: 0toshirohitsugaya@gmail.com
 password: tao4mrFr
 
-Domain for Game: stackgame.freehoster.ch
+Domain for Game:
+stackgame.freehoster.ch
+bloxstack.freehoster.ch
